@@ -21,10 +21,10 @@ const Board: React.FunctionComponent<IBoardProps> = (props) => {
   } = props;
 
   const boardFlipped = matchedCount === 8;
-  
+
   return (
     <div>
-      <ReactCardFlip isFlipped={boardFlipped} flipDirection="horizontal">
+      <ReactCardFlip isFlipped={boardFlipped} flipDirection="vertical">
         <div className="grid grid-cols-4 gap-4">
           {cards.map((card: Card, index: number) => {
             return (
@@ -43,14 +43,13 @@ const Board: React.FunctionComponent<IBoardProps> = (props) => {
             );
           })}
         </div>
-
         <div className="flex justify-center content-center mt-56">
           <h1 className="text-5xl text-center m-5">YOU WON</h1>
           <button
             onClick={restartGame}
-            className="bg-red-500 hover:bg-red-800 font-bold px-4 rounded float-right mb-4 text-black"
+            className="bg-red-500 hover:bg-red-800 font-bold px-4 rounded float-right mb-5 text-black"
           >
-            Restart
+            Play again ?
           </button>
         </div>
       </ReactCardFlip>
