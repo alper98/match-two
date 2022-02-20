@@ -57,14 +57,18 @@ function App() {
   }
 
   return (
-    <div className="w-[calc(100vh_-_240px)] max-w-[calc(100vw_-_40px)] m-auto font-bangers">
-      <Header matchedCount={matchedCount} restartGame={restartGame} />
-      <Board
-        cards={cards}
-        activeCards={activeCards}
-        foundPairs={foundPairs}
-        handleClick={handleClick}
-      />
+    <div>
+      <div className="w-[calc(100vh_-_240px)] max-w-[calc(100vw_-_40px)] m-auto font-bangers">
+        <Header matchedCount={matchedCount} restartGame={restartGame} />
+        <Board
+          matchedCount={matchedCount}
+          cards={cards}
+          activeCards={activeCards}
+          foundPairs={foundPairs}
+          handleClick={handleClick}
+          restartGame={restartGame}
+        />
+      </div>
     </div>
   );
 }

@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         bangers: ["Bangers", "cursive"],
       },
+      colors: {
+        theme: "#181A1B",
+      },
     },
   },
   plugins: [],
