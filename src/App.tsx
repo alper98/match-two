@@ -1,6 +1,6 @@
 import { shuffle } from "lodash";
 import { useState } from "react";
-import Card from "./componets/Card";
+import Board from "./componets/Board";
 import Header from "./componets/Header";
 
 const unshuffledCards = [
@@ -59,24 +59,12 @@ function App() {
   return (
     <div className="w-[calc(100vh_-_240px)] max-w-[calc(100vw_-_40px)] m-auto font-bangers">
       <Header matchedCount={matchedCount} restartGame={restartGame} />
-      <div className="grid grid-cols-4 gap-4">
-        {cards.map((card, index) => {
-          return (
-            <Card
-              key={index}
-              card={card}
-              flipped={
-                activeCards.indexOf(index) !== -1 ||
-                foundPairs.indexOf(index) !== -1
-              }
-              flipCard={() => {
-                handleClick(index);
-              }}
-              index={index}
-            />
-          );
-        })}
-      </div>
+      <Board
+        cards={cards}
+        activeCards={activeCards}
+        foundPairs={foundPairs}
+        handleClick={handleClick}
+      />
     </div>
   );
 }
