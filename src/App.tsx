@@ -1,24 +1,82 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { shuffle } from "lodash";
+import { useState } from "react";
+import Card from "./componets/Card";
+import Header from "./componets/Header";
+
+const unshuffledCards = [
+  { match: false, imageSrc: "/images/aircraft.png", id: 1 },
+  { match: false, imageSrc: "/images/astronaut.png", id: 2 },
+  { match: false, imageSrc: "/images/boat.png", id: 3 },
+  { match: false, imageSrc: "/images/car.png", id: 4 },
+  { match: false, imageSrc: "/images/helicopter.png", id: 5 },
+  { match: false, imageSrc: "/images/motorcycle.png", id: 6 },
+  { match: false, imageSrc: "/images/spaceship.png", id: 7 },
+  { match: false, imageSrc: "/images/truck.png", id: 8 },
+];
 
 function App() {
+  const [activeCards, setActiveCards] = useState<number[]>([]);
+  const [foundPairs, setFoundPairs] = useState<number[]>([]);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [matchedCount, setMatchedCount] = useState(0);
+  const [cards, setCards] = useState(
+    shuffle([...unshuffledCards, ...unshuffledCards])
+  );
+
+  const reset = () => {
+    setTimeout(() => {
+      setActiveCards([]);
+      setIsDisabled(false);
+    }, 1000);
+  };
+
+  const restartGame = () => {
+    setActiveCards([]);
+    setFoundPairs([]);
+    setMatchedCount(0);
+    setCards(shuffle([...unshuffledCards, ...unshuffledCards]));
+  };
+
+  function handleClick(index: number) {
+    if (!isDisabled) {
+      setIsDisabled(true);
+      if (activeCards.length === 0) {
+        setActiveCards([index]);
+        setIsDisabled(false);
+      } else {
+        if (cards[activeCards[0]] === cards[index]) {
+          setFoundPairs([...foundPairs, activeCards[0], index]);
+          reset();
+          setMatchedCount(matchedCount + 1);
+        } else {
+          setActiveCards([...activeCards, index]);
+          reset();
+        }
+      }
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="w-[calc(100vh_-_240px)] max-w-[calc(100vw_-_40px)] m-auto font-bangers">
+      <Header matchedCount={matchedCount} restartGame={restartGame} />
+      <div className="grid grid-cols-4 gap-4">
+        {cards.map((card, index) => {
+          return (
+            <Card
+              key={index}
+              card={card}
+              flipped={
+                activeCards.indexOf(index) !== -1 ||
+                foundPairs.indexOf(index) !== -1
+              }
+              flipCard={() => {
+                handleClick(index);
+              }}
+              index={index}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
