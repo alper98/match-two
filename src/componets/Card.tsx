@@ -9,10 +9,9 @@ interface ICardProps {
 
 const Card: React.FunctionComponent<ICardProps> = (props) => {
   const { flipCard, index, card, flipped } = props;
-  const flippedToFront = flipped;
   return (
     <div className="shadow-2xl">
-      <ReactCardFlip isFlipped={flippedToFront} flipDirection="horizontal">
+      <ReactCardFlip isFlipped={flipped} flipDirection="horizontal">
         <div onClick={flipCard}>
           <img src={"/images/Alper.png"} alt="card-front" />
         </div>
